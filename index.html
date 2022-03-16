@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<!-- https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events -->
+
+<head>
+    <meta charset="utf8">
+    <title>Xs N Os</title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#317EFb">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="./icons/icon-128.png">
+    <LINK REL="SHORTCUT ICON" HREF="./icons/icon-32.png" />
+    <style>
+        .ui-page {
+            background-color: lightcyan !important;
+            display: flex !important;
+            justify-content: center;
+        }
+
+        td {
+            width: 80px;
+            height: 40px;
+            border: 2px solid red;
+            text-align: center;
+        }
+
+        #container {
+            width: 16em;
+            min-width: 16em;
+            margin-left: 10%;
+            margin-right: 10%;
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        .button {
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: .3em;
+
+        }
+
+        caption {
+            font-size: .8em;
+        }
+
+        table {
+            font-size: 2.5em;
+            border: 2px solid red;
+            border-collapse: collapse;
+            background-color: azure;
+            margin-top: 1em;
+        }
+
+        .button {
+            width: 16em !important;
+        }
+    </style>
+</head>
+
+<body style="background-color:orange;">
+    <div id='container'>
+
+        <table>
+            <caption>Tic Tac Toe</caption>
+            <tr>
+                <td id=0>-</td>
+                <td id=1>-</td>
+                <td id=2>-</td>
+            </tr>
+            <tr>
+                <td id=3>-</td>
+                <td id=4>-</td>
+                <td id=5>-</td>
+            </tr>
+            <tr>
+                <td id=6>-</td>
+                <td id=7>-</td>
+                <td id=8>-</td>
+            </tr>
+
+        </table>
+
+        <button class="button">Reset</button>
+
+
+    </div>
+
+
+    <script>
+        var cells = document.getElementsByTagName('td');
+        var toggle = 'X';
+
+        window.addEventListener('load', start);
+
+        function start(evt) {
+            for (var i = 0; i < cells.length; i++) {
+                var temp = document.getElementById(i.toString());
+                temp.addEventListener('click', itsMe);
+            }
+            var but = document.getElementsByTagName('button')[0];
+            but.addEventListener('click', reset);
+
+        }
+
+        function itsMe(evt) {
+            console.log(evt.target.id);
+            if (document.getElementById(evt.target.id).innerHTML == 'X' || document.getElementById(evt.target.id).innerHTML == 'O') {
+                return
+            }
+            document.getElementById(evt.target.id).innerHTML = toggle;
+            if (toggle == 'X')
+                toggle = 'O';
+            else
+                toggle = 'X';
+        }
+        function reset(evt) {
+            location.reload();
+            console.log("reset");
+        }
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js', { scope: './' })
+                .then((reg) => {
+                    // registration worked
+                    console.log('Registration succeeded. Scope is ' + reg.scope);
+                }).catch((error) => {
+                    // registration failed
+                    console.log('Registration failed with ' + error);
+                });
+        }
+
+    </script>
+
+</body>
+
+</html>
